@@ -1,0 +1,12 @@
+package intership2.dao;
+import java.lang.Exception;
+import java.util.ArrayList;
+
+import intership2.dao.Brand;
+public interface BrandDAO {
+	public boolean addBrand(Brand brand) throws Exception; 
+	public boolean delBrand(String sql) throws Exception; 
+	public boolean updateBrand(String sql) throws Exception;
+	public ArrayList<Brand> getBrand(String sql) throws Exception;
+
+}
