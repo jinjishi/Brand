@@ -1,0 +1,127 @@
+package intership2.dao;
+import java.sql.SQLException;
+import java.util.ArrayList;
+
+import intership2.dao.DbcpJdbcUtil;
+import intership2.dao.Brand;
+import java.sql.Connection; 
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.lang.Exception;
+public class BrandDAOImpl implements BrandDAO {
+	public boolean addBrand(Brand brand) throws Exception {
+		boolean result=false;
+		Connection connection = null; 
+		PreparedStatement pStatement = null; 
+		try { 
+			connection = DbcpJdbcUtil.getConnection(); 
+		    String sql = "use shopping insert into Brand(Brandid,Brandname) values (?,?)";
+		    pStatement = connection.prepareStatement(sql);
+			pStatement.setString(1,brand.GetterBrandid()); 
+		    pStatement.setString(2,brand.GetterBrandname()); 
+		    pStatement.execute(); 
+		    result=true;
+		    System.out.println("result="+result);
+		    pStatement.close(); 
+		} catch (SQLException e) { 
+			e.printStackTrace();
+			result=false;
+			} finally { 
+				try { 
+					connection.close();
+					} catch (SQLException e) { 
+						e.printStackTrace();
+						}
+				}
+		return result;
+		}
+	public boolean delBrand(String sql) throws Exception {
+		boolean result=false;
+		Connection connection = null; 
+		PreparedStatement pStatement = null; 
+		try {
+			connection = DbcpJdbcUtil.getConnection(); 
+			pStatement = connection.prepareStatement(sql); 
+			pStatement.execute();  
+			int count=pStatement.getUpdateCount();
+			if(count!=-1) {
+				result=true;
+			}
+			else {
+				result=false;
+			}
+			System.out.println("result="+result);
+		}catch (SQLException e) { 
+			e.printStackTrace();
+			result=false;
+			} finally { 
+				try { 
+					connection.close();
+					} catch (SQLException e) { 
+						e.printStackTrace();
+						}
+				}
+		return result;
+		}
+	public ArrayList<Brand> getBrand(String sql) throws Exception{
+		PreparedStatement pStatement = null; 
+		Connection connection = null;
+		ArrayList<Brand> brands=new ArrayList<Brand>();
+		boolean result=false;
+		try {
+			connection = DbcpJdbcUtil.getConnection(); 
+		    pStatement =connection.prepareStatement(sql);
+			ResultSet rs=pStatement.executeQuery();
+			while(rs.next()) {
+				Brand brand=new Brand();
+				brand.SetterBrandid(rs.getString(1));
+				brand.SetterBrandname(rs.getString(2));
+				System.out.printf(brand.GetterBrandid()+"\t");
+				System.out.printf(brand.GetterBrandname()+"\n");
+			}
+			result=true;
+			System.out.println("result="+result);
+		}catch (SQLException e) { 
+			e.printStackTrace();
+			} 
+				try { 
+					connection.close();
+					} catch (SQLException e) { 
+						e.printStackTrace();
+						}
+				return brands;
+				}
+	@SuppressWarnings("null")
+	public boolean updateBrand(String sql) throws Exception
+	{
+		Connection connection = null;
+		PreparedStatement pStatement = null; 
+		boolean result=false;
+		try {
+			connection = DbcpJdbcUtil.getConnection(); 
+			pStatement=connection.prepareStatement(sql);
+			pStatement.execute();  
+			int count=pStatement.getUpdateCount();
+			if(count!=-1)
+			{
+				result=true;
+			}
+			else
+			{
+				result=false;
+			}
+			System.out.println("result="+result);
+		}catch (SQLException e) { 
+				e.printStackTrace();
+				result=false;
+				} finally { 
+					try { 
+						connection.close();
+						} catch (SQLException e) { 
+							e.printStackTrace();
+							}
+					}
+			return result;
+			}
+	}
+
