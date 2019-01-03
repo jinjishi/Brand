@@ -1,0 +1,18 @@
+# Brand
+package intership2.dao;
+public class Brand{
+public String Brandid;
+public String Brandname;
+public String GetterBrandid() {
+	return this.Brandid;
+}
+public void SetterBrandid(String Brandid) {
+	this.Brandid=Brandid;
+}
+public String GetterBrandname() {
+	return this.Brandname;
+}
+public void SetterBrandname(String Brandname) {
+	this.Brandname=Brandname;
+}
+}
